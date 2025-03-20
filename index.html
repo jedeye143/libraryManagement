@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <style>
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .book-card {
+            transition: all 0.3s;
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .sidebar {
+            height: calc(100vh - 80px);
+        }
+        .book-cover {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="bi bi-book text-3xl mr-3"></i>
+                    <h1 class="text-3xl font-bold">Library Management System</h1>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white">
+                        <i class="bi bi-list text-2xl"></i>
+                    </button>
+                </div>
+                <button id="add-book-btn" class="hidden md:flex bg-white text-indigo-800 px-4 py-2 rounded-lg shadow hover:bg-indigo-100 items-center">
+                    <i class="bi bi-plus-circle mr-2"></i>
+                    Add New Book
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-col md:flex-row">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-white w-full md:w-64 shadow-md md:block hidden">
+            <div class="p-6">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                        <i class="bi bi-person text-indigo-600 text-xl"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="font-medium">Admin User</p>
+                        <p class="text-xs text-gray-500">Library Manager</p>
+                    </div>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li class="mb-2">
+                            <a href="#" class="flex items-center p-3 rounded-lg bg-indigo-50 text-indigo-700">
+                                <i class="bi bi-grid mr-3"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100">
+                                <i class="bi bi-book mr-3"></i>
+                                <span>All Books</span>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100">
+                                <i class="bi bi-check-circle mr-3"></i>
+                                <span>Available Books</span>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100">
+                                <i class="bi bi-x-circle mr-3"></i>
+                                <span>Borrowed Books</span>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100">
+                                <i class="bi bi-people mr-3"></i>
+                                <span>Authors</span>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100">
+                                <i class="bi bi-gear mr-3"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <div class="mt-12">
+                    <button id="sidebar-add-btn" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center">
+                        <i class="bi bi-plus-circle mr-2"></i>
+                        Add New Book
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4">
+            <!-- Mobile Add Button -->
+            <div class="mb-4 md:hidden">
+                <button id="mobile-add-btn" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center">
+                    <i class="bi bi-plus-circle mr-2"></i>
+                    Add New Book
+                </button>
+            </div>
+            
+            <!-- Stats Section -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                    <div class="rounded-full bg-blue-100 p-3 mr-4">
+                        <i class="bi bi-collection text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Books</p>
+                        <h3 id="total-books" class="text-2xl font-bold">0</h3>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                    <div class="rounded-full bg-green-100 p-3 mr-4">
+                        <i class="bi bi-check-circle text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Available Books</p>
+                        <h3 id="available-books" class="text-2xl font-bold">0</h3>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                    <div class="rounded-full bg-red-100 p-3 mr-4">
+                        <i class="bi bi-x-circle text-red-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Borrowed Books</p>
+                        <h3 id="borrowed-books" class="text-2xl font-bold">0</h3>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                    <div class="rounded-full bg-purple-100 p-3 mr-4">
+                        <i class="bi bi-people text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Authors</p>
+                        <h3 id="total-authors" class="text-2xl font-bold">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Filter -->
+            <div class="bg-white rounded-lg shadow p-4 mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-grow">
+                        <div class="relative">
+                            <input type="text" id="search-input" placeholder="Search books by title, author or ISBN..." 
+                                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <select id="filter-select" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="all">All Books</option>
+                            <option value="available">Available Only</option>
+                            <option value="borrowed">Borrowed Only</option>
+                        </select>
+                        <button id="sort-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg flex items-center">
+                            <i class="bi bi-sort-alpha-down mr-2"></i>
+                            Sort
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Books Grid -->
+            <div id="books-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Books will be displayed here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
+                <i class="bi bi-book text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-500 mb-2">No Books Found</h3>
+                <p class="text-gray-400 max-w-md">There are no books in your library yet or none match your search criteria.</p>
+                <button id="empty-add-btn" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    Add Your First Book
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Book Modal -->
+    <div id="book-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold">Add New Book</h2>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <form id="book-form">
+                <input type="hidden" id="book-id">
+                <div class="mb-4">
+                    <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
+                    <input type="text" id="title" name="title" required
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="author" class="block text-gray-700 font-medium mb-2">Author</label>
+                    <input type="text" id="author" name="author" required
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="isbn" class="block text-gray-700 font-medium mb-2">ISBN</label>
+                    <input type="text" id="isbn" name="isbn" required
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="cover" class="block text-gray-700 font-medium mb-2">Cover Image</label>
+                    <select id="cover" name="cover" required
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="1">Default Blue Cover</option>
+                        <option value="2">Classic Red Cover</option>
+                        <option value="3">Modern Green Cover</option>
+                        <option value="4">Vintage Brown Cover</option>
+                        <option value="5">Sci-Fi Purple Cover</option>
+                        <option value="6">Romance Pink Cover</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label for="status" class="block text-gray-700 font-medium mb-2">Status</label>
+                    <select id="status" name="status" required
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="available">Available</option>
+                        <option value="borrowed">Borrowed</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancel-btn" 
+                        class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                        Cancel
+                    </button>
+                    <button type="submit" id="save-btn"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Save Book
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 mx-4">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-4">
+                    <i class="bi bi-exclamation-triangle text-red-500 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Delete Book</h3>
+                <p class="text-gray-500">Are you sure you want to delete this book? This action cannot be undone.</p>
+            </div>
+            <div class="flex justify-center space-x-3">
+                <button id="cancel-delete-btn" 
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                    Cancel
+                </button>
+                <button id="confirm-delete-btn"
+                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample initial books data with cover images
+        let books = [
+            { id: 1, title: "To Kill a Mockingbird", author: "Harper Lee", isbn: "9780061120084", status: "available", cover: "1" },
+            { id: 2, title: "1984", author: "George Orwell", isbn: "9780451524935", status: "borrowed", cover: "2" },
+            { id: 3, title: "The Great Gatsby", author: "F. Scott Fitzgerald", isbn: "9780743273565", status: "available", cover: "3" },
+            { id: 4, title: "Pride and Prejudice", author: "Jane Austen", isbn: "9780141439518", status: "available", cover: "4" },
+            { id: 5, title: "The Catcher in the Rye", author: "J.D. Salinger", isbn: "9780316769488", status: "borrowed", cover: "5" },
+            { id: 6, title: "The Hobbit", author: "J.R.R. Tolkien", isbn: "9780547928227", status: "available", cover: "6" }
+        ];
+        
+        // Cover images (using placeholder colors for simplicity)
+        const coverColors = {
+            "1": "bg-blue-600",
+            "2": "bg-red-600",
+            "3": "bg-green-600",
+            "4": "bg-yellow-800",
+            "5": "bg-purple-600",
+            "6": "bg-pink-500"
+        };
+
+        // Cover patterns (adding some visual interest)
+        const coverPatterns = {
+            "1": "linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent)",
+            "2": "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 10%, transparent 10%, transparent 20%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.1) 30%, transparent 30%)",
+            "3": "linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%)",
+            "4": "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 10%, transparent 10%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 10%, transparent 10%)",
+            "5": "linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)",
+            "6": "radial-gradient(circle at 90% 10%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 20%, transparent 20%)"
+        };
+        
+        // DOM Elements
+        const booksContainer = document.getElementById('books-container');
+        const bookModal = document.getElementById('book-modal');
+        const deleteModal = document.getElementById('delete-modal');
+        const emptyState = document.getElementById('empty-state');
+        const bookForm = document.getElementById('book-form');
+        const modalTitle = document.getElementById('modal-title');
+        const addBookBtn = document.getElementById('add-book-btn');
+        const sidebarAddBtn = document.getElementById('sidebar-add-btn');
+        const mobileAddBtn = document.getElementById('mobile-add-btn');
+        const emptyAddBtn = document.getElementById('empty-add-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const searchInput = document.getElementById('search-input');
+        const filterSelect = document.getElementById('filter-select');
+        const sortBtn = document.getElementById('sort-btn');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        
+        // Statistics elements
+        const totalBooksEl = document.getElementById('total-books');
+        const availableBooksEl = document.getElementById('available-books');
+        const borrowedBooksEl = document.getElementById('borrowed-books');
+        const totalAuthorsEl = document.getElementById('total-authors');
+        
+        // Form fields
+        const bookIdInput = document.getElementById('book-id');
+        const titleInput = document.getElementById('title');
+        const authorInput = document.getElementById('author');
+        const isbnInput = document.getElementById('isbn');
+        const statusInput = document.getElementById('status');
+        const coverInput = document.getElementById('cover');
+        
+        // Variable to keep track of delete book id
+        let deleteBookId = null;
+        let sortDirection = 'asc';
+        
+        // Initialize the application
+        function init() {
+            renderBooks();
+            updateStats();
+            setupEventListeners();
+        }
+        
+        // Render books to the UI
+        function renderBooks(booksToRender = books) {
+            booksContainer.innerHTML = '';
+            
+            if (booksToRender.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                
+                booksToRender.forEach(book => {
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'book-card bg-white rounded-lg shadow-md overflow-hidden';
+                    
+                    const statusClass = book.status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                    const statusText = book.status.charAt(0).toUpperCase() + book.status.slice(1);
+                    const coverColor = coverColors[book.cover] || 'bg-gray-500';
+                    const coverPattern = coverPatterns[book.cover] || '';
+                    
+                    bookCard.innerHTML = `
+                        <div class="book-cover ${coverColor}" style="background-image: ${coverPattern};">
+                            <div class="flex justify-end p-2">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium ${statusClass}">
+                                    ${statusText}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">${book.title}</h3>
+                            <p class="text-gray-600 text-sm mb-1">
+                                <i class="bi bi-person-fill mr-1"></i> ${book.author}
+                            </p>
+                            <p class="text-gray-500 text-xs mb-4">
+                                <i class="bi bi-upc mr-1"></i> ISBN: ${book.isbn}
+                            </p>
+                            <div class="flex space-x-2 mt-4">
+                                <button data-id="${book.id}" class="edit-btn flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 rounded flex items-center justify-center">
+                                    <i class="bi bi-pencil mr-1"></i> Edit
+                                </button>
+                                <button data-id="${book.id}" class="delete-btn flex-1 bg-red-50 hover:bg-red-100 text-red-600 py-2 rounded flex items-center justify-center">
+                                    <i class="bi bi-trash mr-1"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    booksContainer.appendChild(bookCard);
+                });
+                
+                // Add event listeners to edit and delete buttons
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', handleEditClick);
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', handleDeleteClick);
+                });
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const totalBooks = books.length;
+            const availableBooks = books.filter(book => book.status === 'available').length;
+            const borrowedBooks = books.filter(book => book.status === 'borrowed').length;
+            
+            // Get unique authors
+            const uniqueAuthors = new Set(books.map(book => book.author));
+            const totalAuthors = uniqueAuthors.size;
+            
+            totalBooksEl.textContent = totalBooks;
+            availableBooksEl.textContent = availableBooks;
+            borrowedBooksEl.textContent = borrowedBooks;
+            totalAuthorsEl.textContent = totalAuthors;
+        }
+        
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            if (sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('hidden');
+            }
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', toggleSidebar);
+            
+            // Open modal for adding a book (multiple buttons)
+            addBookBtn.addEventListener('click', () => openModal());
+            sidebarAddBtn.addEventListener('click', () => openModal());
+            mobileAddBtn.addEventListener('click', () => openModal());
+            emptyAddBtn.addEventListener('click', () => openModal());
+            
+            // Close modal
+            closeModalBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            
+            // Close delete modal
+            cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+            
+            // Handle form submission
+            bookForm.addEventListener('submit', handleFormSubmit);
+            
+            // Handle delete confirmation
+            confirmDeleteBtn.addEventListener('click', handleDeleteConfirm);
+            
+            // Search functionality
+            searchInput.addEventListener('input', handleSearch);
+            
+            // Filter functionality
+            filterSelect.addEventListener('change', handleFilter);
+            
+            // Sort functionality
+            sortBtn.addEventListener('click', handleSort);
+            
+            // Sidebar navigation links (filter by status)
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    document.querySelectorAll('nav a').forEach(l => {
+                        l.classList.remove('bg-indigo-50', 'text-indigo-700');
+                        l.classList.add('hover:bg-gray-100');
+                    });
+                    
+                    // Add active class to clicked link
+                    link.classList.add('bg-indigo-50', 'text-indigo-700');
+                    link.classList.remove('hover:bg-gray-100');
+                    
+                    // Get the filter value from the link text
+                    const text = link.innerText.trim();
+                    if (text === 'All Books') {
+                        filterSelect.value = 'all';
+                    } else if (text === 'Available Books') {
+                        filterSelect.value = 'available';
+                    } else if (text === 'Borrowed Books') {
+                        filterSelect.value = 'borrowed';
+                    } else {
+                        filterSelect.value = 'all';
+                    }
+                    
+                    // Apply filter
+                    handleFilter();
+                    
+                    // Hide sidebar on mobile after selection
+                    if (window.innerWidth < 768) {
+                        sidebar.classList.add('hidden');
+                    }
+                });
+            });
+        }
+        
+        // Open the modal for adding or editing
+        function openModal(bookToEdit = null) {
+            // Reset the form
+            bookForm.reset();
+            bookIdInput.value = '';
+            
+            if (bookToEdit) {
+                // Edit mode
+                modalTitle.textContent = 'Edit Book';
+                bookIdInput.value = bookToEdit.id;
+                titleInput.value = bookToEdit.title;
+                authorInput.value = bookToEdit.author;
+                isbnInput.value = bookToEdit.isbn;
+                statusInput.value = bookToEdit.status;
+                coverInput.value = bookToEdit.cover;
+            } else {
+                // Add mode
+                modalTitle.textContent = 'Add New Book';
+            }
+            
+            bookModal.classList.remove('hidden');
+        }
+        
+        // Close the modal
+        function closeModal() {
+            bookModal.classList.add('hidden');
+        }
+        
+        // Open delete confirmation modal
+        function openDeleteModal(id) {
+            deleteBookId = id;
+            deleteModal.classList.remove('hidden');
+        }
+        
+        // Close delete confirmation modal
+        function closeDeleteModal() {
+            deleteModal.classList.add('hidden');
+            deleteBookId = null;
+        }
+        
+        // Handle form submission (add or edit)
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const bookId = bookIdInput.value;
+            const title = titleInput.value.trim();
+            const author = authorInput.value.trim();
+            const isbn = isbnInput.value.trim();
+            const status = statusInput.value;
+            const cover = coverInput.value;
+            
+            if (bookId) {
+                // Edit existing book
+                const index = books.findIndex(book => book.id == bookId);
+                if (index !== -1) {
+                    books[index] = {
+                        id: parseInt(bookId),
+                        title,
+                        author,
+                        isbn,
+                        status,
+                        cover
+                    };
+                }
+            } else {
+                // Add new book
+                const newId = books.length > 0 ? Math.max(...books.map(book => book.id)) + 1 : 1;
+                const newBook = {
+                    id: newId,
+                    title,
+                    author,
+                    isbn,
+                    status,
+                    cover
+                };
+                books.push(newBook);
+            }
+            
+            // Update UI
+            renderBooks();
+            updateStats();
+            closeModal();
+        }
+        
+        // Handle edit button click
+        function handleEditClick(e) {
+            const bookId = e.currentTarget.dataset.id;
+            const bookToEdit = books.find(book => book.id == bookId);
+            
+            if (bookToEdit) {
+                openModal(bookToEdit);
+            }
+        }
+        
+        // Handle delete button click
+        function handleDeleteClick(e) {
+            const bookId = e.currentTarget.dataset.id;
+            openDeleteModal(bookId);
+        }
+        
+        // Handle delete confirmation
+        function handleDeleteConfirm() {
+            if (deleteBookId) {
+                books = books.filter(book => book.id != deleteBookId);
+                renderBooks();
+                updateStats();
+                closeDeleteModal();
+            }
+        }
+
+        // Handle search functionality
+        function handleSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            const filteredBooks = books.filter(book => 
+                book.title.toLowerCase().includes(query) ||
+                book.author.toLowerCase().includes(query) ||
+                book.isbn.toLowerCase().includes(query)
+            );
+            renderBooks(filteredBooks);
+        }
+
+        // Handle filter functionality
+        function handleFilter() {
+            const filterValue = filterSelect.value;
+            let filteredBooks = books;
+
+            if (filterValue === 'available') {
+                filteredBooks = books.filter(book => book.status === 'available');
+            } else if (filterValue === 'borrowed') {
+                filteredBooks = books.filter(book => book.status === 'borrowed');
+            }
+
+            renderBooks(filteredBooks);
+        }
+
+        // Handle sort functionality
+        function handleSort() {
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            const sortedBooks = [...books].sort((a, b) => {
+                if (sortDirection === 'asc') {
+                    return a.title.localeCompare(b.title);
+                } else {
+                    return b.title.localeCompare(a.title);
+                }
+            });
+            renderBooks(sortedBooks);
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
