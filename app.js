@@ -1,5 +1,5 @@
 let books = [
-    { id: 1, title: "Noli Me Tangere", author: "José Rizal", isbn: "9789711790168", status: "available", cover: "mars2.png" },
+    { id: 1, title: "Noli Me Tangere", author: "José Rizal", isbn: "9789711790168", status: "available", cover: "https://i.pinimg.com/originals/87/53/f9/8753f93f840a110bd19648082c5a2860.jpg" },
     { id: 2, title: "El Filibusterismo", author: "José Rizal", isbn: "9789711790175", status: "borrowed", cover: "https://m.media-amazon.com/images/I/711HLGoYJQL._AC_UF1000,1000_QL80_.jpg" },
     { id: 3, title: "Banaag at Sikat", author: "Lope K. Santos", isbn: "9789715425974", status: "available", cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1275526742i/8366834.jpg" },
     { id: 4, title: "Florante at Laura", author: "Francisco Balagtas", isbn: "9789715690013", status: "available", cover: "https://aliatamiamalayao.wordpress.com/wp-content/uploads/2020/01/82715562_108114497296323_6495374325590261760_n-1.jpg" },
