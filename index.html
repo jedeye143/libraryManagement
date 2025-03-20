@@ -32,6 +32,23 @@
                 height: auto;
             }
         }
+        
+        /* Add these new styles */
+        .main-content-wrapper {
+            height: calc(100vh - 80px); /* Subtract header height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .books-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .fixed-content {
+            padding: 1rem;
+        }
     </style>
 </head>
 <body class="bg-pink-50 min-h-screen">
@@ -122,92 +139,99 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-4">
-            <!-- Mobile Add Button -->
-            <div class="mb-4 md:hidden">
-                <button id="mobile-add-btn" class="w-full bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 flex items-center justify-center">
-                    <i class="bi bi-plus-circle mr-2"></i>
-                    Add New Book
-                </button>
-            </div>
-            
-            <!-- Stats Section -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white rounded-lg shadow p-4 flex items-center">
-                    <div class="rounded-full bg-pink-100 p-3 mr-4">
-                        <i class="bi bi-collection text-pink-600 text-xl"></i>
+        <main class="flex-1">
+            <div class="main-content-wrapper">
+                <!-- Fixed Content Section -->
+                <div class="fixed-content">
+                    <!-- Mobile Add Button -->
+                    <div class="mb-4 md:hidden">
+                        <button id="mobile-add-btn" class="w-full bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 flex items-center justify-center">
+                            <i class="bi bi-plus-circle mr-2"></i>
+                            Add New Book
+                        </button>
                     </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Total Books</p>
-                        <h3 id="total-books" class="text-2xl font-bold">0</h3>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-4 flex items-center">
-                    <div class="rounded-full bg-green-100 p-3 mr-4">
-                        <i class="bi bi-check-circle text-green-600 text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Available Books</p>
-                        <h3 id="available-books" class="text-2xl font-bold">0</h3>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-4 flex items-center">
-                    <div class="rounded-full bg-red-100 p-3 mr-4">
-                        <i class="bi bi-x-circle text-red-600 text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Borrowed Books</p>
-                        <h3 id="borrowed-books" class="text-2xl font-bold">0</h3>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-4 flex items-center">
-                    <div class="rounded-full bg-purple-100 p-3 mr-4">
-                        <i class="bi bi-people text-purple-600 text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Authors</p>
-                        <h3 id="total-authors" class="text-2xl font-bold">0</h3>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search & Filter -->
-            <div class="bg-white rounded-lg shadow p-4 mb-6">
-                <div class="flex flex-col md:flex-row gap-4">
-                    <div class="flex-grow">
-                        <div class="relative">
-                            <input type="text" id="search-input" placeholder="Search books by title, author or ISBN..." 
-                                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                            <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+                    
+                    <!-- Stats Section -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                            <div class="rounded-full bg-pink-100 p-3 mr-4">
+                                <i class="bi bi-collection text-pink-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Books</p>
+                                <h3 id="total-books" class="text-2xl font-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                            <div class="rounded-full bg-green-100 p-3 mr-4">
+                                <i class="bi bi-check-circle text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Available Books</p>
+                                <h3 id="available-books" class="text-2xl font-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                            <div class="rounded-full bg-red-100 p-3 mr-4">
+                                <i class="bi bi-x-circle text-red-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Borrowed Books</p>
+                                <h3 id="borrowed-books" class="text-2xl font-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 flex items-center">
+                            <div class="rounded-full bg-purple-100 p-3 mr-4">
+                                <i class="bi bi-people text-purple-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Authors</p>
+                                <h3 id="total-authors" class="text-2xl font-bold">0</h3>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex space-x-2">
-                        <select id="filter-select" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500">
-                            <option value="all">All Books</option>
-                            <option value="available">Available Only</option>
-                            <option value="borrowed">Borrowed Only</option>
-                        </select>
-                        <button id="sort-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg flex items-center">
-                            <i class="bi bi-sort-alpha-down mr-2"></i>
-                            Sort
+
+                    <!-- Search & Filter -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-6">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-grow">
+                                <div class="relative">
+                                    <input type="text" id="search-input" placeholder="Search books by title, author or ISBN..." 
+                                        class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                    <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <select id="filter-select" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                    <option value="all">All Books</option>
+                                    <option value="available">Available Only</option>
+                                    <option value="borrowed">Borrowed Only</option>
+                                </select>
+                                <button id="sort-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg flex items-center">
+                                    <i class="bi bi-sort-alpha-down mr-2"></i>
+                                    Sort
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scrollable Books Section -->
+                <div class="books-scroll-area">
+                    <div id="books-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                        <!-- Books will be displayed here -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="empty-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
+                        <i class="bi bi-book text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-500 mb-2">No Books Found</h3>
+                        <p class="text-gray-400 max-w-md">There are no books in your library yet or none match your search criteria.</p>
+                        <button id="empty-add-btn" class="mt-6 bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700">
+                            Add Your First Book
                         </button>
                     </div>
                 </div>
-            </div>
-
-            <!-- Books Grid -->
-            <div id="books-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <!-- Books will be displayed here -->
-            </div>
-
-            <!-- Empty State -->
-            <div id="empty-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
-                <i class="bi bi-book text-6xl text-gray-300 mb-4"></i>
-                <h3 class="text-xl font-semibold text-gray-500 mb-2">No Books Found</h3>
-                <p class="text-gray-400 max-w-md">There are no books in your library yet or none match your search criteria.</p>
-                <button id="empty-add-btn" class="mt-6 bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700">
-                    Add Your First Book
-                </button>
             </div>
         </main>
     </div>
@@ -289,17 +313,19 @@
 
     <script>
         let books = [
-        { id: 1, title: "Noli Me Tangere", author: "José Rizal", isbn: "9789711790168", status: "available", cover: "https://via.placeholder.com/160x240/FF5733/FFFFFF?text=Noli+Me+Tangere" },
-        { id: 2, title: "El Filibusterismo", author: "José Rizal", isbn: "9789711790175", status: "borrowed", cover: "https://via.placeholder.com/160x240/900C3F/FFFFFF?text=El+Filibusterismo" },
-        { id: 3, title: "Banaag at Sikat", author: "Lope K. Santos", isbn: "9789715425974", status: "available", cover: "https://via.placeholder.com/160x240/FFC300/FFFFFF?text=Banaag+at+Sikat" },
-        { id: 4, title: "Florante at Laura", author: "Francisco Balagtas", isbn: "9789715690013", status: "available", cover: "https://via.placeholder.com/160x240/581845/FFFFFF?text=Florante+at+Laura" },
-        { id: 5, title: "Dekada '70", author: "Lualhati Bautista", isbn: "9789715422225", status: "borrowed", cover: "https://via.placeholder.com/160x240/DAF7A6/000000?text=Dekada+70" },
-        { id: 6, title: "GAPÔ", author: "Lualhati Bautista", isbn: "9789715422232", status: "available", cover: "https://via.placeholder.com/160x240/FFC0CB/000000?text=GAPO" },
-        { id: 7, title: "America Is in the Heart", author: "Carlos Bulosan", isbn: "9780295952895", status: "available", cover: "https://via.placeholder.com/160x240/FF4500/FFFFFF?text=America+Is+in+the+Heart" },
-        { id: 8, title: "The Woman Who Had Two Navels", author: "Nick Joaquin", isbn: "9789715696114", status: "borrowed", cover: "https://via.placeholder.com/160x240/8A2BE2/FFFFFF?text=Two+Navels" },
-        { id: 9, title: "Ilustrado", author: "Miguel Syjuco", isbn: "9780374174781", status: "available", cover: "https://via.placeholder.com/160x240/32CD32/FFFFFF?text=Ilustrado" },
-        { id: 10, title: "Smaller and Smaller Circles", author: "F.H. Batacan", isbn: "9781616953980", status: "available", cover: "https://via.placeholder.com/160x240/008080/FFFFFF?text=Smaller+Circles" }
+        { id: 1, title: "Noli Me Tangere", author: "José Rizal", isbn: "9789711790168", status: "available", cover: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/20bbcb87-1202-4b37-888d-54b71cf2e402/d76ptl8-2ecccb85-8e03-4bbe-93ff-2b16da8f63e4.jpg/v1/fill/w_1024,h_1808,q_75,strp/noli_me_tangere_cover_remixed_by_arthuriglesias_d76ptl8-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzIwYmJjYjg3LTEyMDItNGIzNy04ODhkLTU0YjcxY2YyZTQwMlwvZDc2cHRsOC0yZWNjY2I4NS04ZTAzLTRiYmUtOTNmZi0yYjE2ZGE4ZjYzZTQuanBnIiwiaGVpZ2h0IjoiPD0xODA4Iiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uud2F0ZXJtYXJrIl0sIndtayI6eyJwYXRoIjoiXC93bVwvMjBiYmNiODctMTIwMi00YjM3LTg4OGQtNTRiNzFjZjJlNDAyXC9hcnRodXJpZ2xlc2lhcy00LnBuZyIsIm9wYWNpdHkiOjk1LCJwcm9wb3J0aW9ucyI6MC40NSwiZ3Jhdml0eSI6ImNlbnRlciJ9fQ.FTY-TEFz5IG9AXmXXFq4y3Tw88vak8YBjaZRWZ6aHys" },
+        { id: 2, title: "El Filibusterismo", author: "José Rizal", isbn: "9789711790175", status: "borrowed", cover: "https://m.media-amazon.com/images/I/711HLGoYJQL._AC_UF1000,1000_QL80_.jpg" },
+        { id: 3, title: "Banaag at Sikat", author: "Lope K. Santos", isbn: "9789715425974", status: "available", cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1275526742i/8366834.jpg" },
+        { id: 4, title: "Florante at Laura", author: "Francisco Balagtas", isbn: "9789715690013", status: "available", cover: "https://aliatamiamalayao.wordpress.com/wp-content/uploads/2020/01/82715562_108114497296323_6495374325590261760_n-1.jpg" },
+        { id: 5, title: "Dekada '70", author: "Lualhati Bautista", isbn: "9789715422225", status: "borrowed", cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1541742156i/42734737.jpg" },
+        { id: 6, title: "GAPÔ", author: "Lualhati Bautista", isbn: "9789715422232", status: "available", cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1215489074i/1431556.jpg" },
+        { id: 7, title: "America Is in the Heart", author: "Carlos Bulosan", isbn: "9780295952895", status: "available", cover: "https://1882foundation.org/wp-content/uploads/2019/07/america-is-in-the-heart.jpg" },
+        { id: 8, title: "The Woman Who Had Two Navels", author: "Nick Joaquin", isbn: "9789715696114", status: "borrowed", cover: "https://upload.wikimedia.org/wikipedia/en/f/f2/The_Woman_Who_Had_Two_Navels_by_Nick_Joaquin_Book_Cover.jpg" },
+        { id: 9, title: "Ilustrado", author: "Miguel Syjuco", isbn: "9780374174781", status: "available", cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1312051293i/6905480.jpg" },
+        { id: 10, title: "Smaller and Smaller Circles", author: "F.H. Batacan", isbn: "9781616953980", status: "available", cover: "https://m.media-amazon.com/images/M/MV5BY2VkODYzNGEtMjA0Mi00YzliLWE1ODMtNDgwYjIxYmQxZTY3XkEyXkFqcGc@._V1_.jpg" }
     ];
+
+
     
 
         const booksContainer = document.getElementById('books-container');
