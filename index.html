@@ -34,10 +34,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-pink-50 min-h-screen">
 
     <!-- Header -->
-    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
+    <header class="bg-gradient-to-r from-pink-600 to-pink-800 text-white shadow-lg">
         <div class="container mx-auto px-4 py-6">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
@@ -49,7 +49,7 @@
                         <i class="bi bi-list text-2xl"></i>
                     </button>
                 </div>
-                <button id="add-book-btn" class="hidden md:flex bg-white text-indigo-800 px-4 py-2 rounded-lg shadow hover:bg-indigo-100 items-center">
+                <button id="add-book-btn" class="hidden md:flex bg-white text-pink-800 px-4 py-2 rounded-lg shadow hover:bg-pink-100 items-center">
                     <i class="bi bi-plus-circle mr-2"></i>
                     Add New Book
                 </button>
@@ -62,8 +62,8 @@
         <aside id="sidebar" class="sidebar bg-white w-full md:w-64 shadow-md md:block hidden">
             <div class="p-6">
                 <div class="flex items-center justify-center mb-8">
-                    <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
-                        <i class="bi bi-person text-indigo-600 text-xl"></i>
+                    <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                        <i class="bi bi-person text-pink-600 text-xl"></i>
                     </div>
                     <div class="ml-3">
                         <p class="font-medium">Admin User</p>
@@ -74,7 +74,7 @@
                 <nav>
                     <ul>
                         <li class="mb-2">
-                            <a href="#" class="flex items-center p-3 rounded-lg bg-indigo-50 text-indigo-700">
+                            <a href="#" class="flex items-center p-3 rounded-lg bg-pink-50 text-pink-700">
                                 <i class="bi bi-grid mr-3"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -113,7 +113,7 @@
                 </nav>
                 
                 <div class="mt-12">
-                    <button id="sidebar-add-btn" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center">
+                    <button id="sidebar-add-btn" class="w-full bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 flex items-center justify-center">
                         <i class="bi bi-plus-circle mr-2"></i>
                         Add New Book
                     </button>
@@ -125,7 +125,7 @@
         <main class="flex-1 p-4">
             <!-- Mobile Add Button -->
             <div class="mb-4 md:hidden">
-                <button id="mobile-add-btn" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center">
+                <button id="mobile-add-btn" class="w-full bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 flex items-center justify-center">
                     <i class="bi bi-plus-circle mr-2"></i>
                     Add New Book
                 </button>
@@ -134,8 +134,8 @@
             <!-- Stats Section -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <div class="bg-white rounded-lg shadow p-4 flex items-center">
-                    <div class="rounded-full bg-blue-100 p-3 mr-4">
-                        <i class="bi bi-collection text-blue-600 text-xl"></i>
+                    <div class="rounded-full bg-pink-100 p-3 mr-4">
+                        <i class="bi bi-collection text-pink-600 text-xl"></i>
                     </div>
                     <div>
                         <p class="text-gray-500 text-sm">Total Books</p>
@@ -177,12 +177,12 @@
                     <div class="flex-grow">
                         <div class="relative">
                             <input type="text" id="search-input" placeholder="Search books by title, author or ISBN..." 
-                                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
                             <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
                         </div>
                     </div>
                     <div class="flex space-x-2">
-                        <select id="filter-select" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select id="filter-select" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500">
                             <option value="all">All Books</option>
                             <option value="available">Available Only</option>
                             <option value="borrowed">Borrowed Only</option>
@@ -205,7 +205,7 @@
                 <i class="bi bi-book text-6xl text-gray-300 mb-4"></i>
                 <h3 class="text-xl font-semibold text-gray-500 mb-2">No Books Found</h3>
                 <p class="text-gray-400 max-w-md">There are no books in your library yet or none match your search criteria.</p>
-                <button id="empty-add-btn" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                <button id="empty-add-btn" class="mt-6 bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700">
                     Add Your First Book
                 </button>
             </div>
@@ -226,34 +226,26 @@
                 <div class="mb-4">
                     <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
                     <input type="text" id="title" name="title" required
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
                 </div>
                 <div class="mb-4">
                     <label for="author" class="block text-gray-700 font-medium mb-2">Author</label>
                     <input type="text" id="author" name="author" required
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
                 </div>
                 <div class="mb-4">
                     <label for="isbn" class="block text-gray-700 font-medium mb-2">ISBN</label>
                     <input type="text" id="isbn" name="isbn" required
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
                 </div>
                 <div class="mb-4">
                     <label for="cover" class="block text-gray-700 font-medium mb-2">Cover Image</label>
-                    <select id="cover" name="cover" required
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="1">Default Blue Cover</option>
-                        <option value="2">Classic Red Cover</option>
-                        <option value="3">Modern Green Cover</option>
-                        <option value="4">Vintage Brown Cover</option>
-                        <option value="5">Sci-Fi Purple Cover</option>
-                        <option value="6">Romance Pink Cover</option>
-                    </select>
+                    <input type="file" id="cover" name="cover" accept="image/*" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
                 </div>
                 <div class="mb-6">
                     <label for="status" class="block text-gray-700 font-medium mb-2">Status</label>
                     <select id="status" name="status" required
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
                         <option value="available">Available</option>
                         <option value="borrowed">Borrowed</option>
                     </select>
@@ -264,7 +256,7 @@
                         Cancel
                     </button>
                     <button type="submit" id="save-btn"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        class="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700">
                         Save Book
                     </button>
                 </div>
@@ -296,37 +288,20 @@
     </div>
 
     <script>
-        // Sample initial books data with cover images
         let books = [
-            { id: 1, title: "To Kill a Mockingbird", author: "Harper Lee", isbn: "9780061120084", status: "available", cover: "1" },
-            { id: 2, title: "1984", author: "George Orwell", isbn: "9780451524935", status: "borrowed", cover: "2" },
-            { id: 3, title: "The Great Gatsby", author: "F. Scott Fitzgerald", isbn: "9780743273565", status: "available", cover: "3" },
-            { id: 4, title: "Pride and Prejudice", author: "Jane Austen", isbn: "9780141439518", status: "available", cover: "4" },
-            { id: 5, title: "The Catcher in the Rye", author: "J.D. Salinger", isbn: "9780316769488", status: "borrowed", cover: "5" },
-            { id: 6, title: "The Hobbit", author: "J.R.R. Tolkien", isbn: "9780547928227", status: "available", cover: "6" }
-        ];
-        
-        // Cover images (using placeholder colors for simplicity)
-        const coverColors = {
-            "1": "bg-blue-600",
-            "2": "bg-red-600",
-            "3": "bg-green-600",
-            "4": "bg-yellow-800",
-            "5": "bg-purple-600",
-            "6": "bg-pink-500"
-        };
+        { id: 1, title: "Noli Me Tangere", author: "José Rizal", isbn: "9789711790168", status: "available", cover: "https://via.placeholder.com/160x240/FF5733/FFFFFF?text=Noli+Me+Tangere" },
+        { id: 2, title: "El Filibusterismo", author: "José Rizal", isbn: "9789711790175", status: "borrowed", cover: "https://via.placeholder.com/160x240/900C3F/FFFFFF?text=El+Filibusterismo" },
+        { id: 3, title: "Banaag at Sikat", author: "Lope K. Santos", isbn: "9789715425974", status: "available", cover: "https://via.placeholder.com/160x240/FFC300/FFFFFF?text=Banaag+at+Sikat" },
+        { id: 4, title: "Florante at Laura", author: "Francisco Balagtas", isbn: "9789715690013", status: "available", cover: "https://via.placeholder.com/160x240/581845/FFFFFF?text=Florante+at+Laura" },
+        { id: 5, title: "Dekada '70", author: "Lualhati Bautista", isbn: "9789715422225", status: "borrowed", cover: "https://via.placeholder.com/160x240/DAF7A6/000000?text=Dekada+70" },
+        { id: 6, title: "GAPÔ", author: "Lualhati Bautista", isbn: "9789715422232", status: "available", cover: "https://via.placeholder.com/160x240/FFC0CB/000000?text=GAPO" },
+        { id: 7, title: "America Is in the Heart", author: "Carlos Bulosan", isbn: "9780295952895", status: "available", cover: "https://via.placeholder.com/160x240/FF4500/FFFFFF?text=America+Is+in+the+Heart" },
+        { id: 8, title: "The Woman Who Had Two Navels", author: "Nick Joaquin", isbn: "9789715696114", status: "borrowed", cover: "https://via.placeholder.com/160x240/8A2BE2/FFFFFF?text=Two+Navels" },
+        { id: 9, title: "Ilustrado", author: "Miguel Syjuco", isbn: "9780374174781", status: "available", cover: "https://via.placeholder.com/160x240/32CD32/FFFFFF?text=Ilustrado" },
+        { id: 10, title: "Smaller and Smaller Circles", author: "F.H. Batacan", isbn: "9781616953980", status: "available", cover: "https://via.placeholder.com/160x240/008080/FFFFFF?text=Smaller+Circles" }
+    ];
+    
 
-        // Cover patterns (adding some visual interest)
-        const coverPatterns = {
-            "1": "linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent)",
-            "2": "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 10%, transparent 10%, transparent 20%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.1) 30%, transparent 30%)",
-            "3": "linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%)",
-            "4": "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 10%, transparent 10%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 10%, transparent 10%)",
-            "5": "linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)",
-            "6": "radial-gradient(circle at 90% 10%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 20%, transparent 20%)"
-        };
-        
-        // DOM Elements
         const booksContainer = document.getElementById('books-container');
         const bookModal = document.getElementById('book-modal');
         const deleteModal = document.getElementById('delete-modal');
@@ -387,11 +362,9 @@
                     
                     const statusClass = book.status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
                     const statusText = book.status.charAt(0).toUpperCase() + book.status.slice(1);
-                    const coverColor = coverColors[book.cover] || 'bg-gray-500';
-                    const coverPattern = coverPatterns[book.cover] || '';
                     
                     bookCard.innerHTML = `
-                        <div class="book-cover ${coverColor}" style="background-image: ${coverPattern};">
+                        <div class="book-cover" style="background-image: url('${book.cover}');">
                             <div class="flex justify-end p-2">
                                 <span class="px-2 py-1 rounded-full text-xs font-medium ${statusClass}">
                                     ${statusText}
@@ -407,7 +380,8 @@
                                 <i class="bi bi-upc mr-1"></i> ISBN: ${book.isbn}
                             </p>
                             <div class="flex space-x-2 mt-4">
-                                <button data-id="${book.id}" class="edit-btn flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 rounded flex items-center justify-center">
+                                <button data-id="${book.id}" class="edit-btn flex-1 bg-blue-300 hover:bg-blue-400 text-black py-2 rounded flex items-center justify-center">
+
                                     <i class="bi bi-pencil mr-1"></i> Edit
                                 </button>
                                 <button data-id="${book.id}" class="delete-btn flex-1 bg-red-50 hover:bg-red-100 text-red-600 py-2 rounded flex items-center justify-center">
@@ -496,12 +470,12 @@
                     
                     // Remove active class from all links
                     document.querySelectorAll('nav a').forEach(l => {
-                        l.classList.remove('bg-indigo-50', 'text-indigo-700');
+                        l.classList.remove('bg-pink-50', 'text-pink-700');
                         l.classList.add('hover:bg-gray-100');
                     });
                     
                     // Add active class to clicked link
-                    link.classList.add('bg-indigo-50', 'text-indigo-700');
+                    link.classList.add('bg-pink-50', 'text-pink-700');
                     link.classList.remove('hover:bg-gray-100');
                     
                     // Get the filter value from the link text
@@ -541,7 +515,7 @@
                 authorInput.value = bookToEdit.author;
                 isbnInput.value = bookToEdit.isbn;
                 statusInput.value = bookToEdit.status;
-                coverInput.value = bookToEdit.cover;
+                coverInput.value = ''; // Clear file input
             } else {
                 // Add mode
                 modalTitle.textContent = 'Add New Book';
@@ -576,7 +550,17 @@
             const author = authorInput.value.trim();
             const isbn = isbnInput.value.trim();
             const status = statusInput.value;
-            const cover = coverInput.value;
+            const coverFile = coverInput.files[0];
+            
+            // Handle image upload
+            let coverUrl = '';
+            if (coverFile) {
+                coverUrl = URL.createObjectURL(coverFile);
+            } else if (bookId) {
+                // If editing and no new image is uploaded, keep the existing cover
+                const existingBook = books.find(book => book.id == bookId);
+                coverUrl = existingBook ? existingBook.cover : '';
+            }
             
             if (bookId) {
                 // Edit existing book
@@ -588,7 +572,7 @@
                         author,
                         isbn,
                         status,
-                        cover
+                        cover: coverUrl
                     };
                 }
             } else {
@@ -600,7 +584,7 @@
                     author,
                     isbn,
                     status,
-                    cover
+                    cover: coverUrl
                 };
                 books.push(newBook);
             }
