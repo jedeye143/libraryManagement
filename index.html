@@ -124,16 +124,7 @@
             transform: translateY(0);
         }
         
-        .book-preview-container.open .book-left-page {
-            transform: rotateY(-180deg);
-            box-shadow: -10px 0 15px rgba(0,0,0,0.1);
-        }
-        
-        .book-preview-container.open .book-right-page {
-            transform: rotateY(0deg);
-            box-shadow: 10px 0 15px rgba(0,0,0,0.1);
-        }
-        
+       
         .book-right-page {
             transform: rotateY(180deg);
         }
@@ -177,10 +168,6 @@
                         <i class="bi bi-list text-2xl"></i>
                     </button>
                 </div>
-                <button id="add-book-btn" class="hidden md:flex bg-white text-pink-800 px-4 py-2 rounded-lg shadow hover:bg-pink-100 items-center">
-                    <i class="bi bi-plus-circle mr-2"></i>
-                    Add New Book
-                </button>
             </div>
         </div>
     </header>
@@ -248,14 +235,6 @@
             <div class="main-content-wrapper">
                 <!-- Fixed Content Section -->
                 <div class="fixed-content">
-                    <!-- Mobile Add Button -->
-                    <div class="mb-4 md:hidden">
-                        <button id="mobile-add-btn" class="w-full bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 flex items-center justify-center">
-                            <i class="bi bi-plus-circle mr-2"></i>
-                            Add New Book
-                        </button>
-                    </div>
-                    
                     <!-- Stats Section -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                         <div class="bg-white rounded-lg shadow p-4 flex items-center">
@@ -407,7 +386,6 @@
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
     <div id="delete-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 mx-4">
             <div class="text-center mb-6">
@@ -508,7 +486,7 @@
 
     <script>
         let books = [
-        { id: 1, title: "Noli Me Tangere", author: "José Rizal", isbn: "9789711790168", status: "available", cover: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/20bbcb87-1202-4b37-888d-54b71cf2e402/d76ptl8-2ecccb85-8e03-4bbe-93ff-2b16da8f63e4.jpg/v1/fill/w_1024,h_1808,q_75,strp/noli_me_tangere_cover_remixed_by_arthuriglesias_d76ptl8-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzIwYmJjYjg3LTEyMDItNGIzNy04ODhkLTU0YjcxY2YyZTQwMlwvZDc2cHRsOC0yZWNjY2I4NS04ZTAzLTRiYmUtOTNmZi0yYjE2ZGE4ZjYzZTQuanBnIiwiaGVpZ2h0IjoiPD0xODA4Iiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uud2F0ZXJtYXJrIl0sIndtayI6eyJwYXRoIjoiXC93bVwvMjBiYmNiODctMTIwMi00YjM3LTg4ODQtNTRiNzFjZjJlNDAyXC9hcnRodXJpZ2xlc2lhcy00LnBuZyIsIm9wYWNpdHkiOjk1LCJwcm9wb3J0aW9ucyI6MC40NSwiZ3Jhdml0eSI6ImNlbnRlciJ9fQ.FTY-TEFz5IG9AXmXXFq4y3Tw88vak8YBjaZRWZ6aHys" },
+        { id: 1, title: "Noli Me Tangere", author: "José Rizal", isbn: "9789711790168", status: "available", cover: "mars2.png" },
         { id: 2, title: "El Filibusterismo", author: "José Rizal", isbn: "9789711790175", status: "borrowed", cover: "https://m.media-amazon.com/images/I/711HLGoYJQL._AC_UF1000,1000_QL80_.jpg" },
         { id: 3, title: "Banaag at Sikat", author: "Lope K. Santos", isbn: "9789715425974", status: "available", cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1275526742i/8366834.jpg" },
         { id: 4, title: "Florante at Laura", author: "Francisco Balagtas", isbn: "9789715690013", status: "available", cover: "https://aliatamiamalayao.wordpress.com/wp-content/uploads/2020/01/82715562_108114497296323_6495374325590261760_n-1.jpg" },
@@ -520,7 +498,6 @@
         { id: 10, title: "Smaller and Smaller Circles", author: "F.H. Batacan", isbn: "9781616953980", status: "available", cover: "https://m.media-amazon.com/images/M/MV5BY2VkODYzNGEtMjA0Mi00YzliLWE1ODMtNDgwYjIxYmQxZTY3XkEyXkFqcGc@._V1_.jpg" }
     ];
 
-    // Update your books array with more detailed information
     books = books.map(book => ({
         ...book,
         summary: getBookDetails(book.title).summary,
@@ -547,13 +524,11 @@
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('sidebar');
     
-    // Statistics elements
     const totalBooksEl = document.getElementById('total-books');
     const availableBooksEl = document.getElementById('available-books');
     const borrowedBooksEl = document.getElementById('borrowed-books');
     const totalAuthorsEl = document.getElementById('total-authors');
     
-    // Form fields
     const bookIdInput = document.getElementById('book-id');
     const titleInput = document.getElementById('title');
     const authorInput = document.getElementById('author');
@@ -561,18 +536,15 @@
     const statusInput = document.getElementById('status');
     const coverInput = document.getElementById('cover');
     
-    // Variable to keep track of delete book id
     let deleteBookId = null;
     let sortDirection = 'asc';
     
-    // Initialize the application
     function init() {
         renderBooks();
         updateStats();
         setupEventListeners();
     }
     
-    // Render books to the UI
     function renderBooks(booksToRender = books) {
         booksContainer.innerHTML = '';
         
@@ -585,9 +557,7 @@
                 const bookCard = document.createElement('div');
                 bookCard.className = 'book-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer';
                 
-                // Add click handler to the entire card
                 bookCard.addEventListener('click', (e) => {
-                    // Don't open preview if clicking edit or delete buttons
                     if (!e.target.closest('.edit-btn') && !e.target.closest('.delete-btn')) {
                         openBookPreview(book);
                     }
@@ -647,7 +617,6 @@
                 booksContainer.appendChild(bookCard);
             });
             
-            // Add event listeners to edit and delete buttons
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', handleEditClick);
             });
@@ -658,13 +627,11 @@
         }
     }
     
-    // Update statistics
     function updateStats() {
         const totalBooks = books.length;
         const availableBooks = books.filter(book => book.status === 'available').length;
         const borrowedBooks = books.filter(book => book.status === 'borrowed').length;
         
-        // Get unique authors
         const uniqueAuthors = new Set(books.map(book => book.author));
         const totalAuthors = uniqueAuthors.size;
         
@@ -674,7 +641,6 @@
         totalAuthorsEl.textContent = totalAuthors;
     }
     
-    // Toggle sidebar on mobile
     function toggleSidebar() {
         if (sidebar.classList.contains('hidden')) {
             sidebar.classList.remove('hidden');
@@ -683,52 +649,37 @@
         }
     }
     
-    // Setup event listeners
     function setupEventListeners() {
-        // Mobile menu toggle
         mobileMenuBtn.addEventListener('click', toggleSidebar);
         
-        // Open modal for adding a book (multiple buttons)
-        addBookBtn.addEventListener('click', () => openModal());
         sidebarAddBtn.addEventListener('click', () => openModal());
-        mobileAddBtn.addEventListener('click', () => openModal());
         emptyAddBtn.addEventListener('click', () => openModal());
         
-        // Close modal
         closeModalBtn.addEventListener('click', closeModal);
         cancelBtn.addEventListener('click', closeModal);
         
-        // Close delete modal
         cancelDeleteBtn.addEventListener('click', closeDeleteModal);
         
-        // Handle form submission
         bookForm.addEventListener('submit', handleFormSubmit);
         
-        // Handle delete confirmation
         confirmDeleteBtn.addEventListener('click', handleDeleteConfirm);
         
-        // Search functionality
         searchInput.addEventListener('input', handleSearch);
         
-        // Sort functionality
         sortBtn.addEventListener('click', handleSort);
         
-        // Sidebar navigation links (filter by status)
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 
-                // Remove active class from all links
                 document.querySelectorAll('nav a').forEach(l => {
                     l.classList.remove('bg-pink-50', 'text-pink-700');
                     l.classList.add('hover:bg-gray-100');
                 });
                 
-                // Add active class to clicked link
                 link.classList.add('bg-pink-50', 'text-pink-700');
                 link.classList.remove('hover:bg-gray-100');
                 
-                // Get the filter value from the link text
                 const text = link.innerText.trim();
                 let filteredBooks = books;
                 
@@ -738,17 +689,14 @@
                     filteredBooks = books.filter(book => book.status === 'borrowed');
                 }
                 
-                // Render filtered books
                 renderBooks(filteredBooks);
                 
-                // Hide sidebar on mobile after selection
                 if (window.innerWidth < 768) {
                     sidebar.classList.add('hidden');
                 }
             });
         });
 
-        // Add preview modal close handlers
         closePreviewBtn.addEventListener('click', closeBookPreview);
         previewModal.addEventListener('click', (e) => {
             if (e.target === previewModal) {
@@ -757,14 +705,11 @@
         });
     }
     
-    // Open the modal for adding or editing
     function openModal(bookToEdit = null) {
-        // Reset the form
         bookForm.reset();
         bookIdInput.value = '';
         
         if (bookToEdit) {
-            // Edit mode
             modalTitle.textContent = 'Edit Book';
             bookIdInput.value = bookToEdit.id;
             titleInput.value = bookToEdit.title;
@@ -774,33 +719,28 @@
             document.getElementById('summary').value = bookToEdit.summary || '';
             document.getElementById('published').value = bookToEdit.published || '';
             document.getElementById('language').value = bookToEdit.language || '';
-            coverInput.value = ''; // Clear file input
+            coverInput.value = '';  
         } else {
-            // Add mode
             modalTitle.textContent = 'Add New Book';
         }
         
         bookModal.classList.remove('hidden');
     }
     
-    // Close the modal
     function closeModal() {
         bookModal.classList.add('hidden');
     }
     
-    // Open delete confirmation modal
     function openDeleteModal(id) {
         deleteBookId = id;
         deleteModal.classList.remove('hidden');
     }
     
-    // Close delete confirmation modal
     function closeDeleteModal() {
         deleteModal.classList.add('hidden');
         deleteBookId = null;
     }
     
-    // Handle form submission (add or edit)
     function handleFormSubmit(e) {
         e.preventDefault();
         
@@ -873,13 +813,11 @@
         }
     }
     
-    // Handle delete button click
     function handleDeleteClick(e) {
         const bookId = e.currentTarget.dataset.id;
         openDeleteModal(bookId);
     }
     
-    // Handle delete confirmation
     function handleDeleteConfirm() {
         if (deleteBookId) {
             books = books.filter(book => book.id != deleteBookId);
@@ -889,7 +827,6 @@
         }
     }
 
-    // Handle search functionality
     function handleSearch() {
         const query = searchInput.value.trim().toLowerCase();
         const filteredBooks = books.filter(book => 
@@ -937,7 +874,6 @@
                 published: "1891",
                 language: "Spanish"
             },
-            // Add details for other books...
         };
         
         return details[title] || {
@@ -947,7 +883,6 @@
         };
     }
 
-    // Add preview modal elements
     const previewModal = document.getElementById('book-preview-modal');
     const previewContainer = previewModal.querySelector('.book-preview-container');
     const previewCover = document.getElementById('preview-cover');
@@ -959,8 +894,8 @@
     const previewLanguage = document.getElementById('preview-language');
     const closePreviewBtn = document.getElementById('close-preview-btn');
 
-    // Update the openBookPreview function
     function openBookPreview(book) {
+      
         previewCover.src = book.cover;
         previewTitle.textContent = book.title;
         previewAuthor.textContent = book.author;
@@ -968,21 +903,19 @@
         previewSummary.textContent = book.summary;
         previewPublished.textContent = book.published;
         previewLanguage.textContent = book.language;
-        
-        // Set status badge and bottom status
+
         const statusText = book.status === 'available' ? 'Available' : 'Borrowed';
         const statusClass = book.status === 'available' ? 
             'bg-green-100 text-green-800' : 
             'bg-red-100 text-red-800';
-        
+
         const statusBadge = document.getElementById('preview-status');
         statusBadge.className = `px-3 py-1 rounded-full text-sm font-medium ${statusClass}`;
         statusBadge.textContent = statusText;
-        
+
         document.getElementById('preview-status-bottom').textContent = statusText;
-        
+
         previewModal.classList.remove('hidden');
-        // Trigger animations
         requestAnimationFrame(() => {
             previewContainer.classList.add('visible');
             setTimeout(() => {
@@ -990,7 +923,6 @@
             }, 100);
         });
     }
-
     // Update the closeBookPreview function
     function closeBookPreview() {
         previewContainer.classList.remove('open');
@@ -1002,14 +934,12 @@
         }, 500);
     }
 
-    // Add keyboard support for closing the preview
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !previewModal.classList.contains('hidden')) {
             closeBookPreview();
         }
     });
 
-    // Initialize the app
     init();
     </script>
 </body>
